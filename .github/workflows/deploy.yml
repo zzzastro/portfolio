@@ -39,7 +39,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        run: pnpm install --frozen-lockfile
 
       # 5. Build production version
       - name: Build production version
