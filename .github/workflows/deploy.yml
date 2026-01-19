@@ -14,6 +14,7 @@ jobs:
       id-token: write
 
     steps:
+      # 1. Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
         with:
@@ -34,19 +35,24 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # 5. Build production version
       - name: Build production version
         run: pnpm run build
+        run: pnpm run build
         env:
-          NODE_OPTIONS: '--max_old_space_size=4096'  # Memory allocation
+          NODE_OPTIONS: '--max_old_space_size=4096'
 
+      # 6. Create necessary files for GitHub Pages
       - name: Create necessary files
         run: |
           touch dist/github-portfolio/browser/.nojekyll
           cp src/404.html dist/github-portfolio/browser/404.html
 
+      # 7. List files (optional, for debugging)
       - name: List files
         run: ls -la dist/github-portfolio/browser
 
+      # 8. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
