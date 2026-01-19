@@ -3,7 +3,7 @@ name: Deploy Angular to GitHub Pages
 on:
   push:
     branches:
-      - main  # Trigger on pushes to main
+      - main  # Trigger on main branch pushes
 
 jobs:
   deploy:
@@ -14,23 +14,25 @@ jobs:
       id-token: write
 
     steps:
-      # 1. Checkout repository
+      # 1. Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0  # Full history for proper versioning
+          fetch-depth: 0
 
-      # 2. Setup Node.js 20.19
+      # 2. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.19.0'
-          cache: 'pnpm'
+          node-version: '20.19.0'  # Match Angular requirements
+          cache: 'pnpm'            # Cache pnpm dependencies
 
-      # 3. Install pnpm globally
+      # 3. Setup pnpm
       - name: Setup pnpm
-        run: npm install -g pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8  # latest pnpm 8.x
 
       # 4. Install dependencies using pnpm
       - name: Install dependencies
@@ -43,13 +45,13 @@ jobs:
           NODE_OPTIONS: '--max_old_space_size=4096'
 
       # 6. Create necessary files for GitHub Pages
-      - name: Prepare GitHub Pages files
+      - name: Create necessary files
         run: |
           touch dist/github-portfolio/browser/.nojekyll
           cp src/404.html dist/github-portfolio/browser/404.html
 
-      # 7. Optional: List files to verify
-      - name: List built files
+      # 7. List files (optional, for debugging)
+      - name: List files
         run: ls -la dist/github-portfolio/browser
 
       # 8. Deploy to GitHub Pages
