@@ -38,7 +38,6 @@ jobs:
       # 5. Build production version
       - name: Build production version
         run: pnpm run build
-        run: pnpm run build
         env:
           NODE_OPTIONS: '--max_old_space_size=4096'
 
