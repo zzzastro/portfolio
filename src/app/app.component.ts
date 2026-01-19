@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, OnInit, Renderer2, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { NavbarComponent } from './navbar/navbar.component';
 import { ParticlesBackgroundComponent } from './particles-background/particles-background.component';
 
@@ -13,7 +13,7 @@ interface Project {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, NavbarComponent, ParticlesBackgroundComponent],
+  imports: [NavbarComponent, ParticlesBackgroundComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
