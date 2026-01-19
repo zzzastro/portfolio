@@ -20,17 +20,22 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0  # Full history for proper versioning
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18.19.0'  # Matches your Angular version
-          cache: 'npm'  # Cache node_modules
+          node-version: '20.19.0'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci  # Clean install
+        run: pnpm install --frozen-lockfile
 
       - name: Build production version
-        run: npm run build
+        run: pnpm run build
         env:
           NODE_OPTIONS: '--max_old_space_size=4096'  # Memory allocation
 
