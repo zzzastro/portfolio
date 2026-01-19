@@ -44,19 +44,19 @@ jobs:
       # 6. Create necessary files for GitHub Pages
       - name: Create necessary files
         run: |
-          touch dist/github-portfolio/browser/.nojekyll
-          cp src/404.html dist/github-portfolio/browser/404.html
+          touch dist/portfolio/browser/.nojekyll
+          cp src/404.html dist/portfolio/browser/404.html
 
       # 7. List files (optional, for debugging)
       - name: List files
-        run: ls -la dist/github-portfolio/browser
+        run: ls -la dist/portfolio/browser
 
       # 8. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: dist/github-portfolio/browser
+          folder: dist/portfolio/browser
           clean: true
           single-commit: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
