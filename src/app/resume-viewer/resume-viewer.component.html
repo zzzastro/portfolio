@@ -1,0 +1,24 @@
+<div class="resume-overlay" (click)="closeViewer()">
+    <div class="resume-container" (click)="$event.stopPropagation()">
+        <div class="resume-toolbar">
+            <div class="zoom-controls">
+                <app-tooltip text="Zoom Out" position="bottom-right">
+                    <button (click)="zoomOut()">-</button>
+                </app-tooltip>
+                <span>{{ (zoom * 100).toFixed(0) }}%</span>
+                <app-tooltip text="Zoom In" position="bottom-left">
+                    <button (click)="zoomIn()">+</button>
+                </app-tooltip>
+            </div>
+            <div class="action-controls">
+                <button class="btn download-btn" (click)="downloadResume()">Download</button>
+                <button class="btn close-btn" (click)="closeViewer()">Close</button>
+            </div>
+        </div>
+
+        <div class="pdf-wrapper">
+            <pdf-viewer [src]="pdfSrc" [render-text]="true" [original-size]="false" [zoom]="zoom"
+                style="display: block; width: 100%; height: 100%;"></pdf-viewer>
+        </div>
+    </div>
+</div>
