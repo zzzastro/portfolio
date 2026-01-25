@@ -1,10 +1,6 @@
 <div class="main-container">
   <!-- Particles background -->
-  <app-particles-background
-    [quantity]="400"
-    [ease]="80"
-    [color]="'#9E1DCD'"
-    class="particles-backdrop">
+  <app-particles-background [quantity]="400" [ease]="80" [color]="'#9E1DCD'" class="particles-backdrop">
   </app-particles-background>
 
   <div class="content-wrapper">
@@ -16,22 +12,21 @@
       <div class="home-container">
         <!-- Left: Picture -->
         <div class="home-image">
-          <img class="round-image" src="./assets/profile2.png" alt="My Picture">
+          <img class="round-image" src="./assets/profile3.png" alt="My Picture">
         </div>
         <!-- Right: Description and Buttons -->
         <div class="home-description">
           <h1>Hi, I'm Ashish Bhatt</h1>
           <p>
-            I'm a web developer passionate about building scalable, high-performance web
-            applications. I specialize in Python and Django for the backend and Angular for
-            dynamic, responsive interfaces. Continuously learning, I strive to create seamless
-            and intuitive user experiences.
+            I'm a web developer who enjoys building things that feel smooth, fast, and easy to use. I love turning ideas
+            into clean, functional things and constantly improving the way I work. I'm always learning,
+            experimenting, and trying to create things I’m genuinely proud of.
           </p>
           <div class="home-buttons">
-            <!-- Button to download resume -->
-            <a class="btn download-btn" href="./assets/resume.pdf" download>View Resume</a>
+            <!-- Button to open resume viewer -->
+            <button class="btn download-btn" (click)="openResume()" style="cursor: pointer">View Resume</button>
             <!-- Button to jump to the Contact section -->
-            <a class="btn contact-btn" href="#contact">Contact Me</a>
+            <a class="btn contact-btn" href="#contact" style="cursor: pointer">Contact Me</a>
           </div>
         </div>
       </div>
@@ -39,56 +34,113 @@
 
     <!-- About Section -->
     <section id="about" class="about-section">
-      <h2>Core Skills</h2>
+      <h2>Tech Stack</h2>
       <div class="tech-icons">
-        <a href="https://www.python.org/about/" target="_blank"><img src="./assets/icons/python.png" alt="Python"></a>
-        <a href="https://www.djangoproject.com" target="_blank"><img src="./assets/icons/dj2.png" alt="Django"></a>
-        <a href="https://angular.dev/overview" target="_blank"><img src="./assets/icons/angular.png" alt="Angular"></a>
-        <a href="https://www.typescriptlang.org" target="_blank"><img src="./assets/icons/ts.png" alt="TypeScript"></a>
-        <a href="https://docs.docker.com/get-started/docker-overview/" target="_blank"><img
-        src="./assets/icons/docker2.png" alt="Docker"></a>
-        <a href="https://www.figma.com/" target="_blank"><img src="./assets/icons/figma.png" alt="Figma"></a>
-        <a href="https://git-scm.com/doc" target="_blank"><img src="./assets/icons/git.png" alt="Git"></a>
+
+        <!-- Backend -->
+        <a href="https://www.python.org/about/" target="_blank" (click)="$event.preventDefault()"
+          style="cursor: pointer">
+          <app-tooltip text="Python">
+            <iconify-icon icon="skill-icons:python-dark"></iconify-icon>
+          </app-tooltip>
+        </a>
+        <a href="https://www.djangoproject.com" target="_blank" (click)="$event.preventDefault()"
+          style="cursor: pointer">
+          <app-tooltip text="Django">
+            <iconify-icon icon="skill-icons:django"></iconify-icon>
+          </app-tooltip>
+        </a>
+        <a href="https://nestjs.com/" target="_blank" (click)="$event.preventDefault()" style="cursor: pointer">
+          <app-tooltip text="NestJS">
+            <iconify-icon icon="skill-icons:nestjs-dark"></iconify-icon>
+          </app-tooltip>
+        </a>
+
+        <!-- Frontend -->
+        <a href="https://www.typescriptlang.org" target="_blank" (click)="$event.preventDefault()"
+          style="cursor: pointer">
+          <app-tooltip text="TypeScript">
+            <iconify-icon icon="skill-icons:typescript"></iconify-icon>
+          </app-tooltip>
+        </a>
+        <a href="https://angular.dev/overview" target="_blank" (click)="$event.preventDefault()"
+          style="cursor: pointer">
+          <app-tooltip text="Angular">
+            <iconify-icon icon="skill-icons:angular-dark"></iconify-icon>
+          </app-tooltip>
+        </a>
+        <a href="https://react.dev/" target="_blank" (click)="$event.preventDefault()" style="cursor: pointer">
+          <app-tooltip text="React">
+            <iconify-icon icon="skill-icons:react-dark"></iconify-icon>
+          </app-tooltip>
+        </a>
+        <a href="https://astro.build/" target="_blank" (click)="$event.preventDefault()" style="cursor: pointer">
+          <app-tooltip text="Astro">
+            <iconify-icon icon="skill-icons:astro"></iconify-icon>
+          </app-tooltip>
+        </a>
+        <a href="https://tailwindcss.com/" target="_blank" (click)="$event.preventDefault()" style="cursor: pointer">
+          <app-tooltip text="Tailwind CSS">
+            <iconify-icon icon="skill-icons:tailwindcss-dark"></iconify-icon>
+          </app-tooltip>
+        </a>
+
+        <!-- DevOps & Tools -->
+        <a href="https://docs.docker.com/get-started/docker-overview/" target="_blank" (click)="$event.preventDefault()"
+          style="cursor: pointer">
+          <app-tooltip text="Docker">
+            <iconify-icon icon="skill-icons:docker"></iconify-icon>
+          </app-tooltip>
+        </a>
+        <a href="https://git-scm.com/doc" target="_blank" (click)="$event.preventDefault()" style="cursor: pointer">
+          <app-tooltip text="Git">
+            <iconify-icon icon="skill-icons:git"></iconify-icon>
+          </app-tooltip>
+        </a>
+
+        <!-- Design -->
+        <a href="https://www.figma.com/" target="_blank" (click)="$event.preventDefault()" style="cursor: pointer">
+          <app-tooltip text="Figma">
+            <iconify-icon icon="skill-icons:figma-dark"></iconify-icon>
+          </app-tooltip>
+        </a>
+
       </div>
     </section>
+
 
     <!-- Projects Section -->
     <section id="projects" class="projects-section">
       <h2>Projects</h2>
       <div class="projects-grid">
         @for (project of projects; track project) {
-          <div class="project-card">
-            <!-- Image/Video Container -->
-            <div class="project-image">
-              @if (project.media.type === 'video') {
-                <!-- Video with fallback on error -->
-                <video
-                  [src]="project.media.src"
-                  controls
-                  [muted]="true"
-                  defaultMuted
-                  poster="./assets/play_vid.png"
-                  (error)="handleMediaError($event)">
-                  <!-- Fallback poster for video if it doesn't load -->
-                  <img [src]="'assets/fallback-image.png'" alt="Video failed" class="fallback-image" />
-                </video>
-              } @else {
-                <img [src]="project.media.src" [alt]="project.title" (error)="handleMediaError($event)">
-              }
-            </div>
-            <!-- Title -->
-            <h3>{{ project.title }}</h3>
-            <!-- Description -->
-            <p class="project-description">{{ project.description }}</p>
-            <!-- View Project Button -->
-            @if (project.link) {
-              <a class="project-btn" [href]="project.link" target="_blank">
-                View Project
-              </a>
+        <div class="project-card">
+          <!-- Image/Video Container -->
+          <div class="project-image">
+            @if (project.media.type === 'video') {
+            <!-- Video with fallback on error -->
+            <video [src]="project.media.src" controls [muted]="true" defaultMuted poster="./assets/play_vid.png"
+              (error)="handleMediaError($event)">
+              <!-- Fallback poster for video if it doesn't load -->
+              <img [src]="'assets/fallback-image.png'" alt="Video failed" class="fallback-image" />
+            </video>
             } @else {
-              <a class="project-btn disabled" [attr.disabled]="true">View Unavailable</a>
+            <img [src]="project.media.src" [alt]="project.title" (error)="handleMediaError($event)">
             }
           </div>
+          <!-- Title -->
+          <h3>{{ project.title }}</h3>
+          <!-- Description -->
+          <p class="project-description">{{ project.description }}</p>
+          <!-- View Project Button -->
+          @if (project.link) {
+          <a class="project-btn" [href]="project.link" target="_blank">
+            View Project
+          </a>
+          } @else {
+          <a class="project-btn disabled" [attr.disabled]="true">View Unavailable</a>
+          }
+        </div>
         }
       </div>
     </section>
@@ -98,20 +150,33 @@
       <h2>Contact Me</h2>
       <div class="contact-icons">
         <a href="https://www.facebook.com/fallenaspen" target="_blank">
-          <img src="./assets/icons/facebook.png" alt="Facebook">
+          <app-tooltip text="Facebook">
+            <iconify-icon icon="logos:facebook"></iconify-icon>
+          </app-tooltip>
         </a>
+
         <a href="https://linkedin.com/in/thatashishbhatt" target="_blank">
-          <img src="./assets/icons/linkedin.png" alt="LinkedIn">
+          <app-tooltip text="LinkedIn">
+            <iconify-icon icon="skill-icons:linkedin"></iconify-icon>
+          </app-tooltip>
         </a>
         <a href="https://github.com/zzzastro" target="_blank">
-          <img src="./assets/icons/github.png" alt="GitHub">
+          <app-tooltip text="GitHub">
+            <iconify-icon icon="skill-icons:github-dark"></iconify-icon>
+          </app-tooltip>
         </a>
         <!-- Email -->
-        <a (click)="contactEmail()" title="Compose Email" class="email-link">
-          <img src="./assets/icons/email.png" alt="Email">
+        <a (click)="contactEmail()" class="email-link" style="cursor: pointer">
+          <app-tooltip text="Send Mail">
+            <iconify-icon icon="skill-icons:gmail-dark"></iconify-icon>
+          </app-tooltip>
         </a>
       </div>
-    </section>
 
+    </section>
   </div>
+
+  <!-- Resume Viewer Overlay -->
+  <app-resume-viewer *ngIf="showResume" (close)="closeResume()"></app-resume-viewer>
+
 </div>

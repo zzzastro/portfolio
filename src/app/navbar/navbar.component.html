@@ -1,29 +1,96 @@
 <nav class="navbar">
-    <!-- Left side  -->
-    <div class="nav-left">
-      <!-- Name/Logo -->
-      <a href="#home" class="logo portfolio-link" (click)="onPortfolioClick()">Portfolio</a>
-    </div>
-  
-    <!-- Center: Navigation links -->
-    <ul class="nav-center">
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  
-    <!-- Right: Social Icons -->
-    <div class="nav-right">
-      <a href="https://www.facebook.com/fallenaspen" target="_blank">
-        <img src="assets/icons/facebook.png" alt="Facebook">
+  <!-- Left side  -->
+  <div class="nav-left">
+    <!-- Name/Logo -->
+    <a href="#home" class="logo portfolio-link" (click)="onPortfolioClick()">Portfolio</a>
+  </div>
+
+  <!-- Center: Navigation links -->
+  <ul class="nav-center">
+    <li>
+      <a href="#home">
+        <app-tooltip text="Home" position="bottom">
+          <lucide-icon [img]="Home"></lucide-icon>
+        </app-tooltip>
       </a>
-      <a href="https://www.linkedin.com/in/thatashishbhatt/" target="_blank">
-        <img src="assets/icons/linkedin.png" alt="LinkedIn">
+    </li>
+    <li>
+      <a href="#about">
+        <app-tooltip text="About" position="bottom">
+          <lucide-icon [img]="User"></lucide-icon>
+        </app-tooltip>
       </a>
-      <a href="https://github.com/zzzastro" target="_blank">
-        <img src="assets/icons/github.png" alt="GitHub">
+    </li>
+    <li>
+      <a href="#projects">
+        <app-tooltip text="Projects" position="bottom">
+          <lucide-icon [img]="Briefcase"></lucide-icon>
+        </app-tooltip>
       </a>
-    </div>
-  </nav>
-  
+    </li>
+    <li>
+      <a href="#contact">
+        <app-tooltip text="Contact" position="bottom">
+          <lucide-icon [img]="Mail"></lucide-icon>
+        </app-tooltip>
+      </a>
+    </li>
+  </ul>
+
+  <!-- Right: Social Icons -->
+  <div class="nav-right">
+    <a href="https://www.facebook.com/fallenaspen" target="_blank">
+      <app-tooltip text="Facebook" position="bottom">
+        <iconify-icon icon="logos:facebook"></iconify-icon>
+      </app-tooltip>
+    </a>
+
+    <a href="https://www.linkedin.com/in/thatashishbhatt/" target="_blank">
+      <app-tooltip text="LinkedIn" position="bottom">
+        <iconify-icon icon="skill-icons:linkedin"></iconify-icon>
+      </app-tooltip>
+    </a>
+    <a href="https://github.com/zzzastro" target="_blank">
+      <app-tooltip text="GitHub" position="bottom">
+        <iconify-icon icon="skill-icons:github-dark"></iconify-icon>
+      </app-tooltip>
+    </a>
+
+    <!-- Theme Toggle -->
+    <app-tooltip [text]="currentTheme === 'light' ? 'Toggle Dark' : 'Toggle Light'"
+      [position]="isMobile ? 'left' : 'bottom'">
+      <button class="theme-toggle" (click)="toggleTheme()"
+        [attr.aria-label]="currentTheme === 'light' ? 'Toggle Dark' : 'Toggle Light'">
+
+        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="1em" height="1em" fill="currentColor"
+          class="theme-toggle__around" [class.theme-toggle--dark]="currentTheme === 'dark'" viewBox="0 0 32 32">
+
+          <clipPath id="theme-toggle__around__cutout">
+            <path d="M0 0h32v32H0z" />
+          </clipPath>
+
+          <g clip-path="url(#theme-toggle__around__cutout)">
+            <!-- Main sun/moon body -->
+            <circle cx="16" cy="16" r="8.2" />
+
+            <!-- Cutout circle to create crescent -->
+            <circle cx="16" cy="16" r="8.2" class="theme-toggle__cutout" />
+
+            <!-- Sun rays -->
+            <g>
+              <circle cx="16" cy="3.3" r="2.3" />
+              <circle cx="27" cy="9.7" r="2.3" />
+              <circle cx="27" cy="22.3" r="2.3" />
+              <circle cx="16" cy="28.7" r="2.3" />
+              <circle cx="5" cy="22.3" r="2.3" />
+              <circle cx="5" cy="9.7" r="2.3" />
+            </g>
+          </g>
+        </svg>
+      </button>
+    </app-tooltip>
+
+
+  </div>
+
+</nav>

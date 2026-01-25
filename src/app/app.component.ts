@@ -1,7 +1,15 @@
-import { Component, AfterViewInit, OnInit, Renderer2, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, OnInit, Renderer2, OnDestroy, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import 'iconify-icon';
+import { loadIcons } from 'iconify-icon';
+import { ThemeService } from './theme/theme.service';
+import { CommonModule } from '@angular/common';
+import { ResumeViewerComponent } from './resume-viewer/resume-viewer.component';
+
+
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { ParticlesBackgroundComponent } from './particles-background/particles-background.component';
+import { TooltipComponent } from './tooltip/tooltip.component';
 
 interface Project {
   title: string;
@@ -13,10 +21,12 @@ interface Project {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [NavbarComponent, ParticlesBackgroundComponent],
+  imports: [NavbarComponent, ParticlesBackgroundComponent, CommonModule, ResumeViewerComponent, TooltipComponent],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
+
 export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   title = 'portfolio-self';
@@ -56,13 +66,41 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ];
 
-  private navLinkUnlisteners: (() => void)[] = [];
+  // Resume viewer state
+  showResume = false;
 
-  constructor(private renderer: Renderer2) { }
+  private navLinkUnlisteners: (() => void)[] = [];
+  private animationQueues: Map<string, number> = new Map();
+  private currentlyAnimating: string | null = null;
+
+  constructor(private renderer: Renderer2, private themeService: ThemeService) { }
 
   ngOnInit(): void {
+    // Initialize theme
+    this.themeService.initTheme();
+
+    // Preload icons to prevent flickering
+    loadIcons([
+      'skill-icons:python-dark',
+      'skill-icons:django',
+      'skill-icons:angular-dark',
+      'skill-icons:typescript',
+      'skill-icons:docker',
+      'skill-icons:figma-dark',
+      'skill-icons:git',
+      'skill-icons:react-dark',
+      'skill-icons:astro',
+      'skill-icons:nestjs-dark',
+      'skill-icons:tailwindcss-dark',
+      'logos:facebook',
+      'skill-icons:linkedin',
+      'skill-icons:github-dark',
+      'skill-icons:gmail-dark'
+    ]);
+
     // Remove URL fragment (if any) on initial load and scroll to the top
     if (window.location.hash) {
+
       const cleanUrl = window.location.href.split('#')[0];
       window.history.replaceState({}, document.title, cleanUrl);
       window.scrollTo(0, 0);
@@ -94,15 +132,32 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
         if (targetId) {
           const targetSection = document.querySelector(targetId) as HTMLElement;
           if (targetSection) {
-            // Reset and trigger the bounce animation
-            targetSection.classList.remove('bounce-animation');
-            void targetSection.offsetWidth; // Force reflow to restart animation
-            targetSection.classList.add('bounce-animation');
+            // If clicking a different section, clear all queues and stop current animation
+            if (this.currentlyAnimating && this.currentlyAnimating !== targetId) {
+              // Clear all queues
+              this.animationQueues.clear();
+              // Remove animation class from currently animating element
+              const currentSection = document.querySelector(this.currentlyAnimating) as HTMLElement;
+              if (currentSection) {
+                currentSection.classList.remove('bounce-animation');
+              }
+            }
+
+            // Get current queue count for this section
+            const queueCount = this.animationQueues.get(targetId) || 0;
+
+            // Only queue if less than 5
+            if (queueCount < 5) {
+              this.animationQueues.set(targetId, queueCount + 1);
+
+              // If not currently animating this section, start the animation loop
+              if (this.currentlyAnimating !== targetId) {
+                this.playBounceAnimationQueue(targetId, targetSection);
+              }
+            }
+
             // Smooth scroll to the target section
-            targetSection.scrollIntoView({ behavior: 'smooth' });
-            targetSection.addEventListener('animationend', () => {
-              targetSection.classList.remove('bounce-animation');
-            }, { once: true });
+            targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
         }
       });
@@ -120,10 +175,59 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     this.navLinkUnlisteners.forEach(unlisten => unlisten());
   }
 
+  private playBounceAnimationQueue(targetId: string, targetSection: HTMLElement): void {
+    const queueCount = this.animationQueues.get(targetId) || 0;
+
+    if (queueCount > 0) {
+      this.currentlyAnimating = targetId;
+
+      // Play one animation
+      targetSection.classList.remove('bounce-animation');
+      void targetSection.offsetWidth; // Force reflow
+      targetSection.classList.add('bounce-animation');
+
+      // Decrement queue
+      this.animationQueues.set(targetId, queueCount - 1);
+
+      // After animation completes, play next in queue
+      setTimeout(() => {
+        targetSection.classList.remove('bounce-animation');
+
+        // Check if there are more in queue
+        const remainingCount = this.animationQueues.get(targetId) || 0;
+        if (remainingCount > 0) {
+          // Play next animation
+          this.playBounceAnimationQueue(targetId, targetSection);
+        } else {
+          // Queue is empty, clear current animation
+          this.currentlyAnimating = null;
+          this.animationQueues.delete(targetId);
+        }
+      }, 1100); // Animation duration
+    } else {
+      this.currentlyAnimating = null;
+      this.animationQueues.delete(targetId);
+    }
+  }
+
+
   contactEmail(): void {
     const email = 'ashish.bhatt.app@gmail.com';
     const subject = 'Regarding Your Portfolio';
-    window.open(`https://mail.google.com/mail/u/0/?fs=1&tf=cm&to=${email}&su=${encodeURIComponent(subject)}`, '_blank');
+    const body = 'Hi Ashish,\n\nI came across your portfolio and would like to connect properly.';
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank');
+  }
+
+  openResume(): void {
+    this.showResume = true;
+    // Prevent background scrolling
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeResume(): void {
+    this.showResume = false;
+    // Restore background scrolling
+    document.body.style.overflow = 'auto';
   }
 
   // Handle Missing Media Errors by providing fallback content

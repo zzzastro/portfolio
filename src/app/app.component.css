@@ -1,12 +1,10 @@
-/* Import Poppins Font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
 /* Global font family */
 body {
   margin: 0;
   padding-top: calc(3rem + 0.5rem);
-  font-family: 'Poppins', sans-serif;
+  font-family: 'JetBrains Mono', monospace;
 }
+
 
 /* Host element */
 :host {
@@ -66,6 +64,8 @@ section {
   padding: 4rem 2rem;
   text-align: center;
   background-color: transparent;
+  scroll-margin-top: 6rem;
+  /* Ensures title is not hidden behind navbar */
 }
 
 .home-section {
@@ -92,6 +92,14 @@ section {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  /* Smooth edges fix */
+  -webkit-backface-visibility: hidden;
+  mask-image: radial-gradient(circle, white 98%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle, white 98%, transparent 100%);
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
 }
 
 .home-image img {
@@ -106,21 +114,39 @@ section {
   text-align: left;
 }
 
-.home-buttons {
-  margin-top: 1.5rem;
+.home-description h1 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
 }
+
+.home-description p {
+  margin-bottom: 1.5rem;
+}
+
+.home-buttons {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
 
 /* Button styles */
 .btn {
   padding: 0.75rem 1.5rem;
-  margin-right: 1rem;
+  /* margin-right: 1rem; Removed in favor of gap */
   border: none;
   text-decoration: none;
   color: #fff;
   background-color: #76b3d1;
-  border-radius: 4px;
+  border-radius: 0.5rem;
   transition: background-color 0.3s;
+  display: inline-block;
+  text-align: center;
+  font-size: 1rem;
 }
+
 
 .btn:hover {
   background-color: #577e91;
@@ -143,28 +169,32 @@ section {
 /* Tech icons anchor */
 .tech-icons a {
   backface-visibility: hidden;
-  contain: content;
   display: inline-block;
-  overflow: hidden;
 }
 
-/* Tech icons images */
-.tech-icons img {
-  width: 90px;
-  height: 90px;
-  flex: 0 0 90px;
+
+/* Tech icons images and components */
+.tech-icons img,
+.tech-icons iconify-icon {
+  width: 80px;
+  height: 80px;
+  font-size: 80px;
+  /* For iconify-icon */
+  flex: 0 0 80px;
   border: none;
   padding: 0;
   background-color: transparent !important;
-  object-fit: contain;
+  display: inline-block;
   transition: transform 0.3s ease-in-out;
 }
 
 /* Hover effect for tech icons */
-.tech-icons img:hover {
+.tech-icons img:hover,
+.tech-icons iconify-icon:hover {
   transform: scale(1.2);
   animation: vibrate 0.7s infinite ease-in-out;
 }
+
 
 /* Vibration animation */
 @keyframes vibrate {
@@ -215,8 +245,9 @@ section {
 
 /* Project Card Styles */
 .project-card {
-  width: 280px; /* fixed width */
-  flex: 0 0 280px; 
+  width: 280px;
+  /* fixed width */
+  flex: 0 0 280px;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 1rem;
@@ -261,6 +292,7 @@ section {
 
 /* Project Description*/
 .project-description {
+  font-size: 0.86rem;
   margin-top: 0.1rem;
   line-height: 1.5;
   height: 6rem;
@@ -268,8 +300,10 @@ section {
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   /* Limit to 3 lines */
   -webkit-box-orient: vertical;
+
   margin-bottom: 1rem;
 }
 
@@ -309,15 +343,21 @@ section {
   margin-top: 2rem;
 }
 
-.contact-icons img {
+.contact-icons img,
+.contact-icons iconify-icon {
   width: 40px;
   height: 40px;
+  font-size: 40px;
+  /* For iconify-icon */
   transition: transform 0.3s;
+  display: inline-block;
 }
 
-.contact-icons img:hover {
+.contact-icons img:hover,
+.contact-icons iconify-icon:hover {
   transform: scale(1.2);
 }
+
 
 /* For Unavailable Projects */
 .disabled {
@@ -371,4 +411,24 @@ video::-webkit-media-controls-timeline::-webkit-slider-thumb {
 /* Volume slider handle */
 video::-webkit-media-controls-volume-slider::-webkit-slider-thumb {
   background: #000000 !important;
+}
+
+/* Mobile responsiveness for home buttons */
+@media (max-width: 480px) {
+  .home-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .home-buttons .btn {
+    width: 100%;
+    margin-right: 0;
+  }
+}
+
+/* Reduce top padding on small screens since navbar is minimal */
+@media (max-width: 768px) {
+  .home-section {
+    padding-top: 2rem;
+  }
 }

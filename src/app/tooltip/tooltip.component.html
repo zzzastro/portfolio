@@ -1,0 +1,13 @@
+<div class="tooltip-container" (mouseenter)="show()" (mouseleave)="hide()">
+    <ng-content></ng-content>
+
+    <div class="tooltip-box" [class.visible]="isVisible" [class.position-top]="currentPosition === 'top'"
+        [class.position-bottom]="currentPosition === 'bottom'" [class.position-left]="currentPosition === 'left'"
+        [class.position-right]="currentPosition === 'right'" [class.position-top-left]="currentPosition === 'top-left'"
+        [class.position-top-right]="currentPosition === 'top-right'"
+        [class.position-bottom-left]="currentPosition === 'bottom-left'"
+        [class.position-bottom-right]="currentPosition === 'bottom-right'">
+        {{ text }}
+        <div class="tooltip-arrow"></div>
+    </div>
+</div>

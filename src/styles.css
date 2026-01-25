@@ -1,39 +1,129 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 
-/* Global font family */
-body {
-    padding-top: 3rem;
-    padding-top: calc(3rem + 0.5rem);
-    font-family: 'Poppins', sans-serif;
+/* Theme variables */
+:root {
+  --bg-color: #FFFFFF;
+  --text-color: #000000;
+  --border-color: #ddd;
 }
 
+.dark-theme {
+  --bg-color: #0f172a;
+  --text-color: #e2e8f0;
+  --border-color: #334155;
+}
+
+.light-theme {
+  --bg-color: #FFFFFF;
+  --text-color: #000000;
+  --border-color: #ddd;
+}
+
+/* Global font family */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+}
+
+body {
+  padding-top: 3rem;
+  padding-top: calc(3rem + 0.5rem);
+  font-family: 'JetBrains Mono', monospace;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 1rem;
+  }
+}
+
+
+
 .fallback-media {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 100%;
-    max-height: 100%;
-  }
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  max-height: 100%;
+}
 
-  .particles-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-  }
-  
-  canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
+.particles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
 
-  html {
-    scroll-behavior: smooth;
-  }
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+iconify-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+}
+
+/* 
+  Global overrides for Navbar Light Mode 
+  These enable styling based on the parent body.light-theme class,
+  bypassing Angular's component style encapsulation.
+*/
+.light-theme app-navbar .navbar {
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(6px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(180%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+
+/* Force dark color on Lucide icons and SVGs in light mode */
+.light-theme app-navbar .navbar lucide-icon,
+.light-theme app-navbar .navbar svg,
+.light-theme app-navbar .navbar .nav-center li a,
+.light-theme app-navbar .navbar .theme-toggle {
+  color: #0f172a !important;
+  stroke: #0f172a !important;
+}
+
+/* Ensure Logo text is dark in light mode */
+.light-theme app-navbar .navbar .logo {
+  color: #0f172a !important;
+}
+
+/* Hover effects need to override the dark force */
+.light-theme app-navbar .navbar .nav-center li a:hover,
+.light-theme app-navbar .navbar .nav-center li a:hover lucide-icon,
+.light-theme app-navbar .navbar .nav-center li a:hover svg {
+  color: #f59e0b !important;
+  stroke: #f59e0b !important;
+}
