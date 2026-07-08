@@ -58,7 +58,7 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       link: ''
     },
     {
-      title: 'Personal Portfolio',
+      title: 'Portfolio',
       description: 'A personal portfolio project to showcase my information, skills, and projects.',
       media: { type: 'image', src: 'assets/projects/portfolio-project.png' },
       link: 'https://github.com/zzzastro/github-portfolio'
@@ -92,6 +92,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
       'skill-icons:astro',
       'skill-icons:nestjs-dark',
       'skill-icons:tailwindcss-dark',
+      'skill-icons:postman',
+      'devicon:bruno',
+      'skill-icons:nextjs-dark',
       'logos:facebook',
       'skill-icons:linkedin',
       'skill-icons:github-dark',
