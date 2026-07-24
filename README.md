@@ -1,60 +1,47 @@
-# Portfolio
+# Portfolio — Ashish Bhatt
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.4.
+Personal portfolio built with **Angular 21** (standalone components), deployed to **GitHub Pages** via CI/CD.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **Interactive particle background** — canvas-based animation responding to mouse movement
+- **Dark/light theme** — persists preference in `localStorage`, respects `prefers-color-scheme`
+- **Resume viewer** — inline PDF viewer (`ng2-pdf-viewer`) with zoom & download; separate theme-aware PDFs
+- **Responsive navbar** — Lucide icons, smooth-scroll navigation, bounce animation on section targets
+- **Tooltips** — smart positioning that adapts to viewport edges
+- **Media fallback** — graceful degradation for missing video/image assets
+- **Projects showcase** — card grid with video/image previews, descriptions, and external links
+- **Tech stack display** — Iconify skill icons with tooltips
 
-```bash
-ng serve
-```
+## Stack
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+| Category | Technologies |
+|---|---|
+| Framework | Angular 21, TypeScript |
+| Styling | CSS custom properties, JetBrains Mono, Poppins |
+| Icons | Iconify, Lucide |
+| Animation | GSAP, CSS keyframes |
+| PDF | ng2-pdf-viewer |
+| Deployment | GitHub Actions → GitHub Pages |
 
-## Code scaffolding
+## Projects featured
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- **CiteCat** — Django + PyTorch content similarity detector
+- **Noteapp** — Django + Tailwind note-taking app
+- **Storefront** — ecommerce with cart & checkout
+- **PDF Annotator** — annotation tool for PDF documents
 
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Scripts
 
 ```bash
-ng test
+pnpm start        # ng serve — dev server at localhost:4200
+pnpm build        # ng build — production build to dist/
+pnpm test         # ng test — Karma unit tests
+pnpm deploy       # ng deploy — deploy to GitHub Pages
 ```
 
-## Running end-to-end tests
+## Deploy
 
-For end-to-end (e2e) testing, run:
+Pushes to `main` trigger [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) which builds and publishes to the `gh-pages` branch via `JamesIves/github-pages-deploy-action`.
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-"# github-portfolio" 
+The live site is hosted at `https://zzzastro.github.io/portfolio/`.
